@@ -1,11 +1,11 @@
-import { AppBar, Typography } from "@mui/material";
+import { AppBar, Button, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { Link as RouterLink } from "react-router-dom";
 
 const MainLink = styled(RouterLink)(() => ({
-  color: "inherit",
-  textDecoration: "none",
+  "color": "inherit",
+  "textDecoration": "none",
   "$:hover": {
     color: "inherit",
   },
@@ -23,6 +23,8 @@ const AppToolbar = () => {
           <Typography variant="h6" component="div">
             <MainLink to="/">SHOP</MainLink>
           </Typography>
+
+          <Button href="/register">Sign up</Button>
         </Toolbar>
       </AppBar>
       <StatikToolbar />

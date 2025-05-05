@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Product {
-  id: string;
+  _id: string;
   title: string;
   price: string;
   description: string;
@@ -21,7 +21,7 @@ const initialState: ProductsState = {
 };
 
 const productsSlice = createSlice({
-  name: 'products',
+  name: "products",
   initialState,
   reducers: {
     fetchProductsRequest(state) {
@@ -37,22 +37,20 @@ const productsSlice = createSlice({
       state.error = action.payload;
     },
     addProduct(state, action: PayloadAction<Product>) {
-        state.products.push(action.payload)
+      state.products.push(action.payload);
     },
     deleteProduct(state, action: PayloadAction<string>) {
-        state.products = state.products.filter(product => product.id !== action.payload)
-    }
+      state.products = state.products.filter(product => product._id !== action.payload);
+    },
   },
 });
 
-
 export const {
-    fetchProductsRequest,
-    fetchProductsSuccess,
-    fetchProductsFailure,
-    addProduct,
-    deleteProduct
-}= productsSlice.actions;
+  fetchProductsRequest,
+  fetchProductsSuccess,
+  fetchProductsFailure,
+  addProduct,
+  deleteProduct,
+} = productsSlice.actions;
 
-
-export default productsSlice.reducer
+export default productsSlice.reducer;
