@@ -1,4 +1,4 @@
-import { AppBar, Button, Typography } from "@mui/material";
+import { AppBar, Button, Grid, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { Link as RouterLink } from "react-router-dom";
@@ -24,7 +24,14 @@ const AppToolbar = () => {
             <MainLink to="/">SHOP</MainLink>
           </Typography>
 
-          <Button href="/register">Sign up</Button>
+          <Grid>
+            <Button href="/register" color="inherit">
+              Sign up
+            </Button>
+            <Button href="/login" color="inherit">
+              Sign in
+            </Button>
+          </Grid>
         </Toolbar>
       </AppBar>
       <StatikToolbar />

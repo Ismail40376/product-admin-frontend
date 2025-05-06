@@ -1,3 +1,4 @@
+import { Login } from "@mui/icons-material";
 import { Container, CssBaseline } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
@@ -18,6 +19,7 @@ function App() {
           <Route path="/products/new" element={<NewProduct />} />
           <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Container>
     </>
