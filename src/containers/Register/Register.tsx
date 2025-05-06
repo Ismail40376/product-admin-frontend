@@ -1,7 +1,20 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Avatar, Box, Button, Container, Grid, Link, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { registerUserAsync } from "../../store/actions/usersActions";
+import { AppDispatch, RootState } from "../../store/index";
 
 const Register = () => {
   const [state, setState] = useState({
@@ -10,14 +23,23 @@ const Register = () => {
     password: "",
   });
 
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const registerError = useSelector((state: RootState) => state.users.error);
+
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setState(prev => ({ ...prev, [name]: value }));
   };
 
-  const submitFormHandler = (e: React.FormEvent) => {
+  const submitFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitting", state);
+    try {
+      await dispatch(registerUserAsync(state));
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -38,6 +60,12 @@ const Register = () => {
       <Typography component="h1" variant="h5">
         Sign up
       </Typography>
+
+      {registerError && (
+        <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
+          {registerError}
+        </Alert>
+      )}
 
       <Box component="form" onSubmit={submitFormHandler} noValidate sx={{ mt: 1, width: "100%" }}>
         <Grid container spacing={2}>

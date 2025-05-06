@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import defaultImage from "../../assets/NO IMAGE AVAILABLE.avif";
 import axiosApi from "../../axiosApi";
 import { apiURL } from "../../constants";
-import { Product } from "../../store/reducer/productsSlice";
+import { Product } from "../../store/reducers/productsSlice";
 
 const ProductDetails = () => {
   const { id } = useParams();

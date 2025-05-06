@@ -8,7 +8,7 @@ import {
   fetchProductsRequest,
   fetchProductsSuccess,
   Product,
-} from "./reducer/productsSlice";
+} from "./reducers/productsSlice";
 
 export const fetchProductsAsync = () => async (dispatch: AppDispatch) => {
   dispatch(fetchProductsRequest());
