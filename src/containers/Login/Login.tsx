@@ -1,13 +1,29 @@
 import LockOpenIcon from "@mui/icons-material/LockOpen";
-import { Avatar, Box, Button, Container, Grid, Link, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
+import { AppDispatch } from "../../store";
+import { loginUserAsync } from "../../store/actions/usersActions";
+import { RootState } from "../../store/index";
 
 const Login = () => {
   const [form, setForm] = useState({
     username: "",
     password: "",
   });
+  const dispatch = useDispatch<AppDispatch>();
+  const loginError = useSelector((state: RootState) => state.users.loginError);
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -16,7 +32,7 @@ const Login = () => {
 
   const submitFormHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Loggin in with", form);
+    dispatch(loginUserAsync({ ...form }));
   };
 
   return (
@@ -31,7 +47,11 @@ const Login = () => {
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
-
+      {loginError && (
+        <Alert severity="error" sx={{ with: "100%", mt: 2 }}>
+          {loginError}
+        </Alert>
+      )}
       <Box component="form" onSubmit={submitFormHandler} noValidate sx={{ mt: 1, width: "100%" }}>
         <Grid container spacing={2}>
           <Grid size={12}>

@@ -1,8 +1,8 @@
-import { Login } from "@mui/icons-material";
 import { Container, CssBaseline } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AppToolbar from "./components/UI/AppToolbar/AppToolbar";
+import Login from "./containers/Login/Login";
 import NewProduct from "./containers/NewProduct/NewProduct";
 import ProductDetails from "./containers/ProductDetails/ProductDetails";
 import Products from "./containers/Products/Products";

@@ -1,6 +1,8 @@
-import { AppBar, Button, Grid, Typography } from "@mui/material";
+import { Button, Grid } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from "react-router-dom";
 
 const MainLink = styled(RouterLink)(() => ({
@@ -11,19 +13,18 @@ const MainLink = styled(RouterLink)(() => ({
   },
 }));
 
-const StatikToolbar = styled(Toolbar)(({ theme }) => ({
+const StaticToolbar = styled(Toolbar)(({ theme }) => ({
   marginBottom: theme.spacing(2),
 }));
 
-const AppToolbar = () => {
+const AppToolbar: React.FC = () => {
   return (
     <>
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography variant="h6" component="div">
             <MainLink to="/">SHOP</MainLink>
           </Typography>
-
           <Grid>
             <Button href="/register" color="inherit">
               Sign up
@@ -34,7 +35,7 @@ const AppToolbar = () => {
           </Grid>
         </Toolbar>
       </AppBar>
-      <StatikToolbar />
+      <StaticToolbar />
     </>
   );
 };

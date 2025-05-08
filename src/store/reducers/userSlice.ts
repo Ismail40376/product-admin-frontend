@@ -1,15 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export interface User {
+  username: string;
+  email: string;
+  _id: string;
+}
 export interface UserState {
   registered: boolean;
   loading: boolean;
-  error: string | null;
+  error: string | null; // register error
+  user: User | null;
+  loginError: string | null;
 }
 
 const initialState: UserState = {
   registered: false,
   loading: false,
   error: null,
+  user: null,
+  loginError: null,
 };
 
 const usersSlice = createSlice({
@@ -31,9 +40,29 @@ const usersSlice = createSlice({
       state.registered = false;
       state.error = action.payload;
     },
+    //LOGIN
+    loginUserRequest(state) {
+      state.loading = true;
+      state.loginError = null;
+    },
+    loginUserSuccess(state, action: PayloadAction<User>) {
+      state.loading = false;
+      state.user = action.payload;
+    },
+    loginUserFailure(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.loginError = action.payload;
+    },
   },
 });
 
-export const { registerUserRequest, registerUserSuccess, registerUserFailure } = usersSlice.actions;
+export const {
+  registerUserRequest,
+  registerUserSuccess,
+  registerUserFailure,
+  loginUserRequest,
+  loginUserSuccess,
+  loginUserFailure,
+} = usersSlice.actions;
 
 export default usersSlice.reducer;
