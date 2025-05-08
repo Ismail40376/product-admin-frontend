@@ -1,9 +1,12 @@
-import { Button, Grid } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
+import { RootState } from "../../../store";
+import AnonymousMenu from "./Menus/AnonymousMenu";
+import UserMenu from "./Menus/UserMenu";
 
 const MainLink = styled(RouterLink)(() => ({
   "color": "inherit",
@@ -18,6 +21,11 @@ const StaticToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 const AppToolbar: React.FC = () => {
+  const user = useSelector((state: RootState) => state.users.user);
+
+  // const handleMenuOpen = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
+  // const handleMenuClose = () => setAnchorEl(null);
+
   return (
     <>
       <AppBar position="fixed">
@@ -25,14 +33,7 @@ const AppToolbar: React.FC = () => {
           <Typography variant="h6" component="div">
             <MainLink to="/">SHOP</MainLink>
           </Typography>
-          <Grid>
-            <Button href="/register" color="inherit">
-              Sign up
-            </Button>
-            <Button href="/login" color="inherit">
-              Sign in
-            </Button>
-          </Grid>
+          {user ? <UserMenu username={user.username} _id={user._id} /> : <AnonymousMenu />}
         </Toolbar>
       </AppBar>
       <StaticToolbar />

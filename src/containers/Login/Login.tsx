@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 import { loginUserAsync } from "../../store/actions/usersActions";
 import { RootState } from "../../store/index";
@@ -24,6 +24,7 @@ const Login = () => {
   });
   const dispatch = useDispatch<AppDispatch>();
   const loginError = useSelector((state: RootState) => state.users.loginError);
+  const navigate = useNavigate();
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -33,6 +34,7 @@ const Login = () => {
   const submitFormHandler = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(loginUserAsync({ ...form }));
+    navigate("/");
   };
 
   return (
