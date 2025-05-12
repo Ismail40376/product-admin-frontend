@@ -4,6 +4,7 @@ export interface User {
   username: string;
   email?: string;
   _id: string;
+  token: string | null;
 }
 export interface UserState {
   registered: boolean;
@@ -53,6 +54,10 @@ const usersSlice = createSlice({
       state.loading = false;
       state.loginError = action.payload;
     },
+    logoutUser(state) {
+      state.user = null;
+      state.registered = false;
+    },
   },
 });
 
@@ -63,6 +68,7 @@ export const {
   loginUserRequest,
   loginUserSuccess,
   loginUserFailure,
+  logoutUser,
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

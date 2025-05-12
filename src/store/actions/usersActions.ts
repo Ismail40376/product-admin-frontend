@@ -1,10 +1,11 @@
 import axios from "axios";
 import axiosApi from "../../axiosApi";
-import { AppDispatch } from "../index";
+import { AppDispatch, RootState } from "../index";
 import {
   loginUserFailure,
   loginUserRequest,
   loginUserSuccess,
+  logoutUser,
   registerUserFailure,
   registerUserRequest,
   registerUserSuccess,
@@ -45,4 +46,17 @@ export const loginUserAsync = (userData: User) => async (dispatch: AppDispatch) 
     }
     dispatch(loginUserFailure(errorMessage));
   }
+};
+
+export const logoutUserAsync = () => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    const token = getState().users.user?.token;
+    try {
+      const headers = token ? { Authorization: token } : {};
+      await axiosApi.delete("/users/sessions", { headers });
+    } catch (error) {
+      console.warn("Ошибка при серверном logout", error);
+    }
+    dispatch(logoutUser());
+  };
 };
