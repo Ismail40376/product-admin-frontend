@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import categoriesSlice from "./reducers/categoriesSlice";
 import productReducer from "./reducers/productsSlice";
 import usersReducer from "./reducers/userSlice";
 
@@ -28,6 +29,7 @@ const persistedStore = loadFromLocalStorage();
 const rootReducer = combineReducers({
   products: productReducer,
   users: usersReducer,
+  categories: categoriesSlice,
 });
 
 export const store = configureStore({

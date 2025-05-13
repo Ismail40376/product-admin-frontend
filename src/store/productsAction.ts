@@ -1,6 +1,6 @@
 import axios from "axios";
 import axiosApi from "../axiosApi";
-import { AppDispatch } from "./index";
+import { AppDispatch, RootState } from "./index";
 import {
   addProduct,
   deleteProduct,
@@ -26,21 +26,24 @@ export const fetchProductsAsync = () => async (dispatch: AppDispatch) => {
   }
 };
 
-export const createProductAsync = (productData: FormData) => async (dispatch: AppDispatch) => {
-  dispatch(fetchProductsRequest());
-  try {
-    const response = await axiosApi.post<Product>("/products", productData);
-    dispatch(addProduct(response.data));
-  } catch (error: unknown) {
-    let errorMessage = "Unknow error";
-    if (axios.isAxiosError(error)) {
-      errorMessage = error.response?.data ? String(error.response.data) : error.message;
-    } else if (error instanceof Error) {
-      errorMessage = error.message;
+export const createProductAsync =
+  (productData: FormData) => async (dispatch: AppDispatch, getState: () => RootState) => {
+    dispatch(fetchProductsRequest());
+    const token = getState().users.user?.token;
+    try {
+      const headers = token ? { Authorization: token } : {};
+      const response = await axiosApi.post<Product>("/products", productData, { headers });
+      dispatch(addProduct(response.data));
+    } catch (error: unknown) {
+      let errorMessage = "Unknow error";
+      if (axios.isAxiosError(error)) {
+        errorMessage = error.response?.data ? String(error.response.data) : error.message;
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      dispatch(fetchProductsFailure(errorMessage));
     }
-    dispatch(fetchProductsFailure(errorMessage));
-  }
-};
+  };
 
 export const deleteProductAsync = (id: string) => async (dispatch: AppDispatch) => {
   dispatch(fetchProductsRequest());
