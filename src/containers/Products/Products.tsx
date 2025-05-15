@@ -3,13 +3,14 @@ import Grid from "@mui/material/Grid";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
-import { AppDispatch, RootState } from "../../store";
+import { AppDispatch, RootState } from "../../store/index";
 import { fetchProductsAsync } from "../../store/productsAction";
 import ProductItem from "./productItem";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
   const products = useSelector((state: RootState) => state.products.products);
+  const user = useSelector((state: RootState) => state.users.user);
 
   useEffect(() => {
     dispatch(fetchProductsAsync());
@@ -17,21 +18,17 @@ const Products = () => {
 
   return (
     <Grid container direction="column" spacing={2}>
-      <Grid
-        container
-        direction="row"
-        justifyContent="space-between"
-        alignContent="space-between"
-        alignItems="center"
-      >
+      <Grid container direction="row" justifyContent="space-between" alignItems="center">
         <Grid>
           <Typography variant="h4">Products</Typography>
         </Grid>
-        <Grid>
-          <Button color="primary" component={RouterLink} to="/products/new">
-            Add product
-          </Button>
-        </Grid>
+        {user && user.role === "admin" && (
+          <Grid>
+            <Button color="secondary" component={RouterLink} to="/products/new">
+              Add product
+            </Button>
+          </Grid>
+        )}
       </Grid>
       <Grid container direction="row" spacing={2}>
         {products.map(product => (
