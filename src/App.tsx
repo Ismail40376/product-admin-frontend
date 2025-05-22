@@ -42,7 +42,8 @@ function App() {
       <Container maxWidth="xl">
         <Routes>
           <Route path="/" element={<Products />} />
-          <Route path="/products/new" element={<NewProduct />} />
+          <Route path="/products/new" />
+
           <Route
             path="/products/new"
             element={

@@ -33,7 +33,11 @@ const AppToolbar: React.FC = () => {
           <Typography variant="h6" component="div">
             <MainLink to="/">SHOP</MainLink>
           </Typography>
-          {user ? <UserMenu username={user.username} _id={user._id} /> : <AnonymousMenu />}
+          {user ? (
+            <UserMenu token={user.token} role={user.role} username={user.username} _id={user._id} />
+          ) : (
+            <AnonymousMenu />
+          )}
         </Toolbar>
       </AppBar>
       <StaticToolbar />

@@ -2,7 +2,8 @@ import { Button, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../../store";
-import { logoutUserAsync, User } from "../../../../store/actions/usersActions";
+import { logoutUserAsync } from "../../../../store/actions/usersActions";
+import { User } from "../../../../store/reducers/userSlice";
 
 const UserMenu = (user: User) => {
   const [anchor, setAnchorEl] = useState<null | HTMLElement>(null);
